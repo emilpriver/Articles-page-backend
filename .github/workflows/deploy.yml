@@ -2,9 +2,9 @@ name: Deploy
 
 on:
     pull_request:
-      types: [merged]
-      branches:
-      - 'master'
+        types: [merged]
+        branches:
+            - 'master'
 
 jobs:
   build:
