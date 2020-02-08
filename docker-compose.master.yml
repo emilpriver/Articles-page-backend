@@ -6,8 +6,8 @@ services:
     build: .
     env_file:
       - "/home/ubuntu/env/news_app/.env"
-    command: python /usr/app/backend/manage.py runserver 0.0.0.0:7000
+    command: python /usr/app/backend/manage.py runserver 0.0.0.0:80
     volumes:
       - ./backend:/usr/app/backend:delegated
     ports:
-      - "4000:4000"
+      - "4000:80"
