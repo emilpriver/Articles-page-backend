@@ -1,0 +1,14 @@
+version: "3"
+services:
+  django:
+    build: .
+    command: python /usr/app/backend/manage.py runserver 0.0.0.0:8080
+    volumes:
+      - ./backend:/usr/app/backend:delegated
+    ports:
+      - "8080:8080"
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - 1025:1025
+      - 8025:8025
