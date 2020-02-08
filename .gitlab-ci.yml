@@ -25,6 +25,16 @@ build:
     - master
   tags: [docker]
 
+migrate:
+  stage: migrate
+  script:
+    - sudo docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - sudo docker pull $BUILD_IMAGE
+    - sudo docker run --env-file /home/ubuntu/env/news_app/.env $BUILD_IMAGE python manage.py migrate
+  only:
+    - master
+  tags: [deploy]
+
 tag:
   stage: tag
   script:
@@ -38,16 +48,6 @@ tag:
   only:
     - master
     - docker
-
-migrate:
-  stage: migrate
-  script:
-    - sudo docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - sudo docker pull $BUILD_IMAGE
-    - sudo docker run --env-file /home/ubuntu/env/news_app/.env $BUILD_IMAGE python manage.py migrate
-  only:
-    - master
-  tags: [deploy]
 
 deploy:
   stage: deploy
