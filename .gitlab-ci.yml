@@ -5,6 +5,7 @@ services:
 stages:
   - build
   - migrate
+  - tag
   - deploy
 
 variables:
@@ -23,6 +24,20 @@ build:
   only:
     - master
   tags: [docker]
+
+tag:
+  stage: tag
+  script:
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $BUILD_IMAGE
+    - docker tag $BUILD_IMAGE $PRODUCTION_IMAGE
+    - docker push $PRODUCTION_IMAGE
+
+  tags: [docker]
+  only:
+    - master
+    - docker
 
 migrate:
   stage: migrate
