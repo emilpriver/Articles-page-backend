@@ -2,7 +2,6 @@ name: Deploy
 
 on:
     pull_request:
-        types: [merged]
         branches:
             - 'master'
 
@@ -12,5 +11,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag django:${GITHUB_REF##*/}
-        
+      run: docker build . --file Dockerfile --tag django:${GITHUB_REF##*/}
