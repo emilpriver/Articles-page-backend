@@ -8,6 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag django:$(date +%s)
+      run: docker build . --file Dockerfile --tag django:$(github.run_id)
     - name: Pylint
-      run: docker run django:$(date +%s) pylint --load-plugins pylint_django ../backend
+      run: docker run django:$(github.run_id) pylint --load-plugins pylint_django ../backend
