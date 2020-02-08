@@ -8,7 +8,7 @@ stages:
   - deploy
 
 variables:
-  CONTAINER_IMAGE: registry.gitlab.com/emilpriver/articles-page-backend
+  CONTAINER_IMAGE: registry.gitlab.com/emilpriver/articles-page-backend/django
   BUILD_IMAGE: $CONTAINER_IMAGE:$CI_PIPELINE_ID
   PRODUCTION_IMAGE: $CONTAINER_IMAGE:master
 

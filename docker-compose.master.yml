@@ -1,7 +1,7 @@
 version: "3"
 services:
   django:
-    image: registry.gitlab.com/emilpriver/sweamer-backend/django:master
+    image: registry.gitlab.com/emilpriver/articles-page-backend/django:master
     restart: always
     build: .
     env_file:
