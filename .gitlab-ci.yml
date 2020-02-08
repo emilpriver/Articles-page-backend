@@ -8,7 +8,7 @@ stages:
   - deploy
 
 variables:
-  CONTAINER_IMAGE: registry.gitlab.com/emilpriver/sweamer-backend/django
+  CONTAINER_IMAGE: registry.gitlab.com/emilpriver/articles-page-backend
   BUILD_IMAGE: $CONTAINER_IMAGE:$CI_PIPELINE_ID
   PRODUCTION_IMAGE: $CONTAINER_IMAGE:master
 
