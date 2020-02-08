@@ -13,7 +13,6 @@ variables:
   BUILD_IMAGE: $CONTAINER_IMAGE:$CI_PIPELINE_ID
   PRODUCTION_IMAGE: $CONTAINER_IMAGE:master
 
-#production
 build:
   stage: build
   script:
@@ -34,10 +33,10 @@ tag:
     - docker tag $BUILD_IMAGE $PRODUCTION_IMAGE
     - docker push $PRODUCTION_IMAGE
     
-    tags: [docker]
-    only:
-      - master
-      - docker
+  tags: [docker]
+  only:
+    - master
+    - docker
         
 migrate:
   stage: migrate
