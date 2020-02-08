@@ -1,0 +1,13 @@
+version: "3"
+services:
+  django:
+    image: registry.gitlab.com/emilpriver/sweamer-backend/django:master
+    restart: always
+    build: .
+    env_file:
+      - "/home/ubuntu/env/.env"
+    command: python /usr/app/backend/manage.py runserver 0.0.0.0:4000
+    volumes:
+      - ./backend:/usr/app/backend:delegated
+    ports:
+      - "4000:4000"
