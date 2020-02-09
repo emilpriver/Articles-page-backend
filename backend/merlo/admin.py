@@ -1,4 +1,5 @@
-#import global from django
+""" Merlo Admin """
+# import global from django
 from django.contrib import admin
 
 # import from local app

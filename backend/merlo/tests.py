@@ -1,3 +1,5 @@
-from django.test import TestCase
+""" Custom tests for merlo """
+
+# from django.test import TestCase
 
 # Create your tests here.
