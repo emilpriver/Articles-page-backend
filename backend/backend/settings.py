@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # modules
     'rest_framework',
+    # apps
+    'merlo',
 ]
 
 MIDDLEWARE = [
@@ -130,9 +133,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-
-
 if not DEBUG:
     # aws settings
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
@@ -155,3 +155,9 @@ if not DEBUG:
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     MEDIA_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'backend.aws.storage_backends.PublicMediaStorage'
+
+else:
+    STATIC_URL = os.path.join(BASE_DIR, 'static/')
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static")
+    ]
