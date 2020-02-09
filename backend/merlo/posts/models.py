@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -13,3 +14,12 @@ class Article(models.Model):
     content = models.TextField(default="")
     thumbnail = models.ImageField(default="")
     category = models.ManyToManyField(Category)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        """ On save, update timestamps """
+        if not self.id:
+            self.created = timezone.now()
+        self.updated = timezone.now()
+        return super(Article, self).save(*args, **kwargs)
