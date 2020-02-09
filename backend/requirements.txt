@@ -7,4 +7,5 @@ djangorestframework==3.11.0
 Markdown==3.2
 pylint-django==2.0.13
 pylint==2.4.4
+Pillow==7.0.0
 mysqlclient==1.4.6
