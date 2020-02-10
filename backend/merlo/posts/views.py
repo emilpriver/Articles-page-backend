@@ -12,7 +12,7 @@ from merlo.posts.models import Article
 class ListArticles(APIView):
     """ List all articles """
 
-    def get(self, request, slug):
+    def get(self, request):
         """
         Return a list of all articles.
         """
