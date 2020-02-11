@@ -20,6 +20,9 @@ class ListArticles(APIView):
         serialized_data = ArticleSerializer(data, many=True).data
         return Response(serialized_data, status=status.HTTP_200_OK)
 
+    def post(self, request):
+        """ Save data """
+
 
 class ListSingleArticle(APIView):
     """ Get singel article """
