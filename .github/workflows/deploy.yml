@@ -1,0 +1,27 @@
+name: Deploy to server
+
+on:
+  pull_request:
+    branches: [master]
+    types: [completed]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag django:${GITHUB_REF##*/}
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Tag the Docker image
+        run: docker tag django:${GITHUB_REF##*/} docker.pkg.github.com/emilpriver/merlo-backend/backend:master
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push the Docker image
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u emilpriver --password-stdin
+        run: docker push docker.pkg.github.com/emilpriver/merlo-backend/backend:master
