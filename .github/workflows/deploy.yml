@@ -6,24 +6,14 @@ on:
     types: [closed]
 
 jobs:
-  build:
+  build_and_deploy_to_registry:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag django:${GITHUB_REF##*/}
-  tag:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
       - name: Tag the Docker image
         run: docker tag django:${GITHUB_REF##*/} docker.pkg.github.com/emilpriver/merlo-backend/backend:master
-  push:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Login to Github Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u emilpriver --password-stdin
       - name: Push the Docker image
         run: docker push docker.pkg.github.com/emilpriver/merlo-backend/backend:master
 # For later: https://github.community/t5/GitHub-Actions/pull-request-action-does-not-run-on-merge/td-p/29284
