@@ -3,7 +3,7 @@ name: Deploy to server
 on:
   pull_request:
     branches: [master]
-    types: [completed]
+    types: [closed]
 
 jobs:
   build:
@@ -25,3 +25,6 @@ jobs:
       - name: Push the Docker image
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u emilpriver --password-stdin
         run: docker push docker.pkg.github.com/emilpriver/merlo-backend/backend:master
+
+
+# For later: https://github.community/t5/GitHub-Actions/pull-request-action-does-not-run-on-merge/td-p/29284
