@@ -38,7 +38,8 @@ class Article(models.Model):
     slug = models.SlugField(default="", unique=True, blank=False)
     content = JSONField(default="", null=True, blank=True)
     thumbnail = models.ImageField(default="")
-    category = models.ManyToManyField(Category)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -48,6 +49,8 @@ class Article(models.Model):
         """ On save, update timestamps """
         if not self.id:
             self.created = timezone.now()
+
+        self.version += 1
 
         self.updated = timezone.now()
         return super(Article, self).save(*args, **kwargs)
