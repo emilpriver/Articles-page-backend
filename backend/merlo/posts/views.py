@@ -5,7 +5,7 @@ from rest_framework import authentication, permissions
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
-from merlo.posts.serializers import ArticleSerializer
+from merlo.posts.serializers import ArticleSerializer, CategorySerializer
 from merlo.posts.models import Article, Category
 
 
@@ -22,37 +22,37 @@ class ListArticles(APIView):
 
     def post(self, request):
         """ Save data """
-        required_fields = ['title', 'content', 'thumbnail', 'category']
-        if all(request.data.get(item) for item in required_fields):
+        title = request.data.get('title')
+        content = request.data.get('content')
+        thumbnail = request.FILES.get('thumbnail')
+        category = request.data.get('category')
 
-            title = request.data.get('title')
-            content = request.data.get('content')
-            thumbnail = request.FILES.get('thumbnail')
-            category = request.data.get('category')
+        data = {
+            "title": title,
+            "content": content,
+            "thumbnail": thumbnail
+        }
 
+        serializer = ArticleSerializer(data=data)
+
+        if serializer.is_valid():
             category_object = Category.objects.filter(slug=category)
-            if not category_object.exists():
-                return Response("Category dont exists", status=status.HTTP_400_BAD_REQUEST)
+            if category_object.exists():
+                Article.objects.create(
+                    title=title,
+                    content=content,
+                    thumbnail=thumbnail,
+                    category=category_object.first(),
+                    # athour=request.user
+                )
 
-            data = {
-                "title": title,
-                "content": content,
-                "thumbnail": thumbnail,
-                "category": category_object.first().__dict__
-            }
-
-            serializer = ArticleSerializer(data=data)
-
-            if serializer.is_valid():
-                serializer.save()
                 return Response({
                     "status": "ok",
                     "data": serializer.data
                 }, status=status.HTTP_200_OK)
+            return Response("Category dont exists", status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response("Please all required fields", status=status.HTTP_400_BAD_REQUEST)
 
 
 class ListSingleArticle(APIView):

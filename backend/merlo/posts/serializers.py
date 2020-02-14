@@ -1,14 +1,13 @@
 from rest_framework import serializers
 from merlo.posts.models import Article, Category
 
-
 class CategorySerializer(serializers.Serializer):
-    title = serializers.CharField()
+    title = serializers.CharField(required=False)
     slug = serializers.SlugField()
-    thumbnail = serializers.ImageField()
+    thumbnail = serializers.ImageField(required=False)
 
     class Meta:
-        models: Category
+        models = Category
 
 
 class ArticleSerializer(serializers.Serializer):
@@ -16,10 +15,11 @@ class ArticleSerializer(serializers.Serializer):
     slug = serializers.SlugField(required=False)
     content = serializers.CharField()
     thumbnail = serializers.ImageField()
-    category = CategorySerializer(many=False)
+    category = CategorySerializer(many=False, required=False)
 
     class Meta:
-        models: Article
+        models = Article
+        fields = ['title', 'slug', 'content', 'thumbnail', 'category']
 
     def create(self, validated_data):
         return Article(**validated_data)

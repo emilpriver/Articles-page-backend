@@ -90,7 +90,9 @@ db.sqlite3
 backend/.env
 backend/db.sqlite3
 backend/*.img
-backend/static/*
-!backend/static/.gitkeep
+backend/dev-static/*
+!backend/dev-static/.gitkeep
+backend/dev-media/*
+!backend/dev-media/.gitkeep
 .vscode
 venv

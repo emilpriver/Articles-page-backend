@@ -157,7 +157,7 @@ if not DEBUG:
     DEFAULT_FILE_STORAGE = 'backend.aws.storage_backends.PublicMediaStorage'
 
 else:
-    STATIC_URL = os.path.join(BASE_DIR, 'static/')
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static")
-    ]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'dev-static')
+    STATIC_URL = '/dev-static/'
+    MEDIA_URL = '/dev-media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'dev-media')

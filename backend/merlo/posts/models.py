@@ -3,6 +3,7 @@ import json
 from django.db import models
 from django.utils import timezone
 
+from backend.utils.tools import generate_unique_slug
 from backend.utils.models import JSONField
 from backend.utils.json import json_strip_whitespace
 
@@ -35,7 +36,8 @@ class Category(models.Model):
 
 class Article(models.Model):
     title = models.TextField(default="")
-    slug = models.SlugField(default="", unique=True, blank=False)
+    slug = models.SlugField(default="", max_length=1000,
+                            unique=True, blank=False)
     content = JSONField(default="", null=True, blank=True)
     thumbnail = models.ImageField(default="")
     category = models.ForeignKey(
@@ -51,6 +53,11 @@ class Article(models.Model):
             self.created = timezone.now()
 
         self.version += 1
+
+        if not self.slug:
+            self.slug = self.title
+
+        self.slug = generate_unique_slug(Article, self.slug)
 
         self.updated = timezone.now()
         return super(Article, self).save(*args, **kwargs)
