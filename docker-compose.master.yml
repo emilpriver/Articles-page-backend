@@ -5,9 +5,9 @@ services:
     restart: always
     build: .
     env_file:
-      - "/home/ubuntu/env/news_app/.env"
-    command: python /usr/app/backend/manage.py runserver 0.0.0.0:80
+      - "/home/ubuntu/env/merlo/.env"
+    command: gunicorn backend.wsgi.application --bind 0.0.0.0:8000
     volumes:
       - ./backend:/usr/app/backend:delegated
     ports:
-      - "4000:80"
+      - "4000:8000"
