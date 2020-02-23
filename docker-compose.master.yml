@@ -1,7 +1,7 @@
 version: "3"
 services:
   django:
-    image: registry.gitlab.com/emilpriver/articles-page-backend/django:master
+    image: docker.pkg.github.com/emilpriver/merlo-backend/backend:master
     restart: always
     build: .
     env_file:
