@@ -18,17 +18,4 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u emilpriver --password-stdin
       - name: Push the Docker image
         run: docker push docker.pkg.github.com/emilpriver/merlo-backend/backend:master
-  deploy_to_server:
-    runs-on: ubuntu-latest
-    needs: build_and_deploy_to_registry
-    steps:
-      - uses: actions/checkout@v2
-      - name: Stop the running container
-        run: sudo docker-compose -f docker-compose.master.yml down
-      - name: Login to Github Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u emilpriver --password-stdin
-      - name: Pull lastest image
-        run: sudo docker-compose -f docker-compose.master.yml pull
-      - name: Start the running container
-        run: sudo docker-compose -f docker-compose.master.yml up -d
 # For later: https://github.community/t5/GitHub-Actions/pull-request-action-does-not-run-on-merge/td-p/29284
