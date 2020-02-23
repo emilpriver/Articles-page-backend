@@ -94,5 +94,5 @@ backend/dev-static/*
 !backend/dev-static/.gitkeep
 backend/dev-media/*
 !backend/dev-media/.gitkeep
-.vscode
+/.vscode
 venv
